@@ -315,7 +315,14 @@ namespace Microsoft.Xna.Framework
 						IDisposable disposable = Components[i] as IDisposable;
 						if (disposable != null)
 						{
+							IGameComponent component = Components[i];
 							disposable.Dispose();
+
+							// If the component removed itself on disposal, adjust accordingly
+							if (!Components.Contains(component))
+							{
+								 i -= 1;
+							}
 						}
 					}
 
